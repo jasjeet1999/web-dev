@@ -1,0 +1,81 @@
+body{
+    margin: 0;
+}
+* {
+    box-sizing: border-box;
+}
+.navbar{
+    height: 12vh;
+    background-color: rgb(166 214 166);
+    display : flex;
+}
+.ticket-container{
+    height: 88vh;
+    background-color: #ff9800c2;
+}
+.filter-container,
+.add-delete-container{
+    height : 8vh;
+    margin-top: 2vh;
+    margin-left: 9vw;
+    border-radius: 5px;
+    background-color: rgb(5, 85, 29);
+}
+.filter-container{
+    width : 18vw;
+    display: flex;
+}
+.add-delete-container{
+    width : 9vw;
+    display: flex;
+}
+.filter{
+    height: 100%;
+    width: 25%;
+    display: flex;
+}
+.red-color-btn,
+.yellow-color-btn,
+.blue-color-btn,
+.pink-color-btn{
+     display: block;
+     width: 40%;
+     height: 40%;
+     border-radius: 3px;
+     margin: auto;
+}
+.red-color-btn{
+    background-color: red;
+}
+.yellow-color-btn{
+    background-color: yellow;
+}
+.blue-color-btn{
+    background-color: blue;
+}
+.pink-color-btn{
+    background-color: pink;
+}
+.filter:hover{
+    background-color: black;
+    cursor: pointer;
+}
+.add, .delete{
+    height: 100%;
+    width: 50%;
+    display: flex;
+}
+.action-btn {
+display: block;
+height: 40%;
+width: 40%;
+margin-top: calc(8vh * 0.3);
+margin-bottom: calc(8vh * 0.3);
+margin-left: calc(4.5vw * 0.3);
+margin-right: calc(4.5vw * 0.3);
+background-color: white;
+}
+.add:hover, .delete:hover{
+    background-color: black;
+    cursor: pointer;
+}

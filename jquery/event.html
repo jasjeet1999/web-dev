@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <!-- $("selector").action like $= querySelector in js-->
+    <!-- <button>click me!</button> -->
+    <input type="text"/> <!-- for input text area -->
+    <!-- <script>
+        $("button").click(function(e){ //equals to .addEventListner
+          alert("this");  //this equals to $(e.currentarget).methods in js
+        });
+        </script> -->
+        <!-- <script>
+            $("button").click(function(e){ //equals to $(e.currentarget).methods in js
+                $(this).hide();
+            });
+            </script> -->
+        <!-- <script>
+           $("button").dblclick(function(e){ //equals to $(e.currentarget).methods in js
+                    $(this).hide();
+                });
+                </script> -->
+      <!-- <script>
+        $("button").hover(function(e){ //equals to $(e.currentarget).methods in js
+                 $(this).hide();
+                });
+        $("button").mouseup(function(e){ //equals to $(e.currentarget).methods in js
+                 $(this).hide(); //after leaving mouse press
+                });
+        $("button").mousedown(function(e){ //equals to $(e.currentarget).methods in js
+                 $(this).hide(); //on mouse press
+                });        
+           </script> -->
+<script>
+    $("input").focus(function(){
+        console.log(focus);
+    });
+</script>
+<script>
+    $("input").blur(function(){
+        console.log(blur);
+    });
+</script>
+<!-- already focus on startup -->
+<script>$("input").focus</script>
+
+</body>
+</html>
