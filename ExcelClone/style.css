@@ -1,5 +1,6 @@
 body{
     margin : 0;
+    overflow: hidden;
 }
 *{
     box-sizing: border-box;
@@ -32,6 +33,10 @@ body{
     background-color: #19492e;
     cursor: pointer;
 }
+.menu-bar-item.selected:hover {
+    background-color: #fff;
+    cursor: default;
+}
 .menu-icon-bar{
     display: flex;
     height: 6vh;
@@ -49,3 +54,135 @@ body{
     background-color: lightgray;
     cursor: pointer;
 }
+.menu-selector{
+    font-size: 1.2rem;
+    margin-left: 0.7rem;
+    margin-right: 0.7rem;
+}
+#font-family {
+    width: 10vw;
+    /* minimum width is for if we change the device then min width handle it so it doesnot smaller than that */
+    min-width: 130px; 
+    font-family: Noto Sans;
+}
+
+#font-size {
+    width: 3.5vw;
+    min-width: 55px;
+}
+.formula-bar {
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightgray;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+#selected-cell {
+    width: 120px;
+    height: 70%;
+}
+
+#function-sign {
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+}
+
+#function-input {
+    /* 120+40 = 160 */
+    width: calc(100vw - 160px); 
+    height: 70%;
+}
+.formula-editor {
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background-color: #fff;
+}
+.data-container {
+    display: flex;
+    /* 100 - above all height - below sheet bar say 3vh so 100-24 total */
+    height: 76vh; 
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100vw;
+}
+
+#select-all {
+    width: 25px;
+    height: 25px;
+    border: 1px solid lightgray;
+}
+#columns {
+    height: 25px;
+    width: calc(100vw - 25px);
+    border: 1px solid lightgray;
+    display: flex;
+    overflow: hidden;
+}
+#rows {
+    width: 25px;
+    height: calc(76vh - 25px);
+    border: 1px solid lightgray;
+    overflow: hidden;
+}
+#cells {
+    position: relative;
+    height: calc(76vh - 25px);
+    width: calc(100vw - 25px);
+    border: 1px solid lightgray;
+    overflow: scroll;
+}
+.sheet-bar {
+    height: 3vh;
+    width: 100vw;
+}
+
+.column-name {
+    min-width: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    border-right: 0.5px solid lightgray;
+}
+
+.row-name {
+    min-height: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    border-bottom: 0.5px solid lightgray;
+}
+
+.cell-row {
+    display: flex;
+}
+
+.input-cell {
+    width: 100px;
+    min-width: 100px;
+    height: 25px;
+    min-height: 25px;
+    border-bottom: 0.5px solid lightgray;
+    border-right: 0.5px solid lightgray;
+}
+/* .sheet-scroller{
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+}
+.sheet-tab-container{
+    margin-right: 10px;
+    display: flex;
+    border-left: 0.5px solid lightgrey;
+} */
