@@ -131,6 +131,7 @@ body{
     height: calc(76vh - 25px);
     border: 1px solid lightgray;
     overflow: hidden;
+    /* overflow: scroll se alag se scroll bar aa jaega rows and columns me */
 }
 #cells {
     position: relative;
@@ -152,6 +153,10 @@ body{
     align-items: center;
     font-weight: 600;
     border-right: 0.5px solid lightgray;
+    font-size: 14px;
+    font-family: Noto sans;
+    overflow: hidden;
+    padding-left: 5px;
 }
 
 .row-name {
@@ -175,6 +180,13 @@ body{
     min-height: 25px;
     border-bottom: 0.5px solid lightgray;
     border-right: 0.5px solid lightgray;
+    padding-left: 3px;
+    padding-right: 3px;
+    overflow: hidden;
+    font-size: 14px;
+    font-family: Noto Sans;
+    display:flex;
+    align-items: center;
 }
 /* .sheet-scroller{
     margin-right: 20px;
@@ -186,3 +198,7 @@ body{
     display: flex;
     border-left: 0.5px solid lightgrey;
 } */
+.input-cell.selected {
+    border: 2px solid #217346;
+    outline-color: #217346;
+}
