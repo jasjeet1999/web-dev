@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas POC 1</title>
+    <style>
+        body {
+            margin : 0;
+        }
+        canvas {
+            display: block;
+            /* height: 100vh;
+            width: 100vw; */
+        }
+    </style>
+</head>
+<body>
+    <canvas></canvas>
+</body>
+<script>
+//     //draw rectangle
+    let canvas = document.querySelector("canvas");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    let ctx = canvas.getContext("2d"); //pen
+//     ctx.strokeRect(10,10,20,20); //for rectangle(x,y,w,h)
+//     ctx.strokeRect(10,40,20,20);
+//     ctx.strokeRect(10,70,20,20);
+
+//     //draw X
+//     ctx.beginPath();
+//     ctx.moveTo(10,10); //starting point
+//     ctx.strokeStyle = "Red";
+//     ctx.lineWidth = 1;
+//     ctx.lineTo(30,30); //end point
+//     ctx.stroke(); //to draw
+
+//     ctx.moveTo(10,30);
+//     ctx.strokeStyle = "Red";
+//     ctx.lineWidth = 1;
+//     ctx.lineTo(30,10);
+//     ctx.stroke();
+
+// // Tick   
+//     ctx.beginPath();
+//     ctx.moveTo(15,45);
+//     ctx.strokeStyle = "Green";
+//     ctx.lineWidth = 1;
+//     ctx.lineTo(20,55);
+//     ctx.stroke();
+
+//     ctx.moveTo(20,55);
+//     ctx.strokeStyle = "Green";
+//     ctx.lineWidth = 1;
+//     ctx.lineTo(30,40);
+//     ctx.stroke();
+// //yes
+//     ctx.strokeStyle = "Black"
+//     ctx.moveTo(20,55);
+//     ctx.strokeText("yes",12,80)
+
+// //radio button
+  
+// ctx.beginPath();
+// //complete circle
+// // ctx.arc(100, 75, 50, 0, 2* Math.PI); //(x,y,redius,start angle , end angle)
+// //semi cricle top 
+// // ctx.arc(100, 75, 50, 1*Math.PI, 2* Math.PI); 
+// ctx.arc(20,110,10,0,2*Math.PI);
+// ctx.arc(20,111,5,0,2*Math.PI)
+// ctx.stroke();
+
+//line draw with mouse 
+let moveToNoted = false;
+canvas.addEventListener("mousemove",function(e){
+    if(e.buttons == 1) //if left click
+    {
+        if(!moveToNoted){
+            ctx.beginPath();
+            ctx.moveTo(e.pageX,e.pageY); //start kr ---dia //just for starting index
+            ctx.strokeStyle = "blue";
+            ctx.lineWidth = 2;
+            moveToNoted = true;
+        }
+        else{
+            ctx.lineTo(e.pageX,e.pageY); //end ---multiple end positions
+            ctx.stroke();
+        }
+     } else{
+         moveToNoted = false; //on release of left click for redrawing the line
+        }
+    
+});
+    
+    
+
+
+
+
+</script>
+</html>

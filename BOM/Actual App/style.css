@@ -1,0 +1,19 @@
+body{
+    margin: 0;
+    overflow: hidden;
+}
+*{
+    box-sizing: border-box;
+}
+.video-container{
+    position: fixed; 
+    /* top left corner se */
+    /* border: 1px solid black; */
+    height: 100vh;
+    background-color:;
+
+}
+#record-video{
+    position: fixed;
+    right: 
+}

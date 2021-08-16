@@ -2,6 +2,13 @@ const PS = new PerfectScrollbar("#cells",{
     // wheelSpeed: 2,
     // wheelPropagation: true,
 });
+function findRowCol(ele) {
+    let idArray = $(ele).attr("id").split("-");// - pe split kr dia taki row,rowid,col,colid mil jae L26 se
+    let rowId = parseInt(idArray[1]);//parseInt se int me convert karne ke liya nhi to as string add ho raha h L57 pe
+    let colId = parseInt(idArray[3]); //row-1-col-3, So rowid 1st index pe and colid 3rd pe
+    return [rowId, colId];
+}
+//col naming A...Z then AA,AB....
 for(let i = 1; i <= 100; i++) {
     let str = "";
     let n = i; //say i = 52
@@ -23,12 +30,12 @@ for(let i = 1; i <= 100; i++) {
 for(let i = 1; i <= 100; i++){
     let row = $('<div class="cell-row"></div>'); //create element
     for(let j = 1; j <= 100; j++) {
-        row.append(`<div id="row-${i}-col-${j}" class="input-cell"></div>`);
+        row.append(`<div id="row-${i}-col-${j}" class="input-cell" contenteditable = "false"></div>`);
     }
     $("#cells").append(row);
 } 
 $("#cells").scroll(function(){
-    //cells ke scroll hone pe scroll bar bhi utna scroll ho
+    //cells ke scroll hone pe scroll bar/columns bhi utna scroll ho
     $("#columns").scrollLeft(this.scrollLeft); //this means cells ka
     //scrollLeft value bhi deta h or scroll bhi kr raha h
     $("#rows").scrollTop(this.scrollTop);
@@ -40,27 +47,32 @@ $(".input-cell").dblclick(function(){
 $(".input-cell").blur(function(){
     $(this).attr("contenteditable","false");
 });
-$(".input-cell").click(function(){
-    $(".input-cell.selected").removeClass("selected"); //prev selected ko remove kr dia
-   $(this).addClass("selected");
-});
-$(".input-cell").click(function(e){ //e for event listner
-    let idArray = $(this).attr("id").split("-"); // - pe split kr dia taki row rowid col colid mil jae L26 se
-    let rowId = parseInt(idArray[1]); //parseInt se int me convert karne ke liya nhi to as string add ho raha h L57 pe
-    let colId = parseInt(idArray[3]);
+// $(".input-cell").click(function(){
+//     $(".input-cell.selected").removeClass("selected"); //prev selected ko remove kr dia
+//    $(this).addClass("selected"); //this means current ele(.input-cell) ko selected kr dia
+//    //if already selected then remove selected other wise apply selected.
+// });
+
+function getTopBottomLeftRightCell(rowId, colId) { //global kr dia bcz use many times to avoid repedity
     let topCell = $(`#row-${rowId - 1}-col-${colId}`); //this is our top cell
     let bottomCell = $(`#row-${rowId + 1}-col-${colId}`);
     let leftCell = $(`#row-${rowId}-col-${colId - 1}`);
     let rightCell = $(`#row-${rowId}-col-${colId + 1}`);
-    if ($(this).hasClass("selected")) {
+    return [topCell, bottomCell, leftCell, rightCell];
+}
+//EX3
+$(".input-cell").click(function (e) { //e for event listner
+    let [rowId, colId] = findRowCol(this);
+    let [topCell, bottomCell, leftCell, rightCell] = getTopBottomLeftRightCell(rowId, colId);
+
+    if ($(this).hasClass("selected") && e.ctrlKey) { //ctrlkey key press pe hi unselect kare
         unselectCell(this, e, topCell, bottomCell, leftCell, rightCell)
-    } else {
+    } else { //this is to select only single cell if only mouse key is pressed and remove all the prev
         selectCell(this, e, topCell, bottomCell, leftCell, rightCell);
     }
-
 });
 function unselectCell(ele, e, topCell, bottomCell, leftCell, rightCell) {
-    if (e.ctrlKey) {
+    if (e.ctrlKey && $(ele).attr("contenteditable") == "false") {
         if ($(ele).hasClass("top-selected")) {
             topCell.removeClass("bottom-selected");
         }
@@ -74,15 +86,15 @@ function unselectCell(ele, e, topCell, bottomCell, leftCell, rightCell) {
             bottomCell.removeClass("top-selected");
         }
         $(ele).removeClass("selected top-selected bottom-selected right-selected left-selected");
+    //if cntrl is not pressed remove all classes bcz we have to select one cell
     }
 }
 
-function selectCell(ele, e, topCell, bottomCell, leftCell, rightCell) {
-    if (e.ctrlKey) {
-        let idArray = $(ele).attr("id").split("-");
-        let rowId = parseInt(idArray[1]);
-        let colId = parseInt(idArray[3]);
-
+//EX3
+                   //ele gives this at L168
+function selectCell(ele, e, topCell, bottomCell, leftCell, rightCell, mouseSelection) {
+    if (e.ctrlKey || mouseSelection) { 
+//we use ctrl if we want to select single cell and for multiple cell we make mouseSelection true so or is used for either one fn true our loop works
         // top selected or not
         let topSelected;
         if (topCell) {
@@ -93,7 +105,6 @@ function selectCell(ele, e, topCell, bottomCell, leftCell, rightCell) {
         if (bottomCell) {
             bottomSelected = bottomCell.hasClass("selected");
         }
-
         // left selected or not
         let leftSelected;
         if (leftCell) {
@@ -104,29 +115,63 @@ function selectCell(ele, e, topCell, bottomCell, leftCell, rightCell) {
         if (rightCell) {
             rightSelected = rightCell.hasClass("selected");
         }
-
         if (topSelected) {
             topCell.addClass("bottom-selected");
             $(ele).addClass("top-selected");
         }
-
         if (leftSelected) {
             leftCell.addClass("right-selected");
             $(ele).addClass("left-selected");
         }
-
         if (rightSelected) {
             rightCell.addClass("left-selected");
             $(ele).addClass("right-selected");
         }
-
         if (bottomSelected) {
             bottomCell.addClass("top-selected");
             $(ele).addClass("bottom-selected");
         }
     } else {
         $(".input-cell.selected").removeClass("selected top-selected bottom-selected right-selected left-selected");
+        //remove selected class from all cell on single click
     }
-
-    $(ele).addClass("selected");
+    $(ele).addClass("selected"); // and select one cell
 }
+let mousemoved = false;
+let startCellStored = false;
+let startCell;
+let endCell;
+$(".input-cell").mousemove(function (event) {
+    event.preventDefault();
+    console.log(event);
+    if (event.buttons == 1 && !event.ctrlKey) { //buttons == 1 means left mouse clicked
+        $(".input-cell.selected").removeClass("selected top-selected bottom-selected right-selected left-selected");
+        mousemoved = true;
+        if(!startCellStored) {
+            let [rowId, colId] = findRowCol(event.target);
+            startCell = { rowId: rowId, colId: colId };
+            startCellStored = true;
+        } else {
+            let [rowId, colId] = findRowCol(event.target);
+            endCell = { rowId: rowId, colId: colId };
+            selectAllBetweenTheRange(startCell, endCell);
+        }
+    } else if (event.buttons == 0 && mousemoved) {
+        startCellStored = false;
+        mousemoved = false;
+    }
+})
+
+function selectAllBetweenTheRange(start, end) {
+    for(let i = (start.rowId < end.rowId ? start.rowId : end.rowId); i <= (start.rowId < end.rowId ? end.rowId : start.rowId); i++) 
+    { //drag karte hue start row se end row ka loop //for reverse drag BtoT
+        for (let j = (start.colId < end.colId ? start.colId : end.colId); j <= (start.colId < end.colId ? end.colId : start.colId); j++)
+         {// "  " for column
+            let [topCell, bottomCell, leftCell, rightCell] = getTopBottomLeftRightCell(i, j);
+            
+            selectCell($(`#row-${i}-col-${j}`)[0], {}, topCell, bottomCell, leftCell, rightCell, true);
+                        //this will fetch the elem in jquery object and to convert it to normal node we use [0]
+        }
+    }
+}
+
